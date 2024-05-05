@@ -9,9 +9,12 @@ const Login = () => {
 	const [emailError, setEmailError] = useState('');
 	const [submitError, setSubmitError] = useState('');
 	const [passwordError, setPasswordError] = useState(''); // add this line
-
+	// Direct to Success page
 	const navigate = useNavigate();
+	// Show and Hide Password
+	const [showPassword, setShowPassword] = useState(false); // add this line
 
+	// Email Handler Required
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
 		if (e.target.value && !e.target.value.includes('@')) {
@@ -21,10 +24,12 @@ const Login = () => {
 		}
 	};
 
+	// Disable Password Handler
 	const handlePasswordChange = (e) => {
 		setPassword(e.target.value);
 	};
 
+	// Error Handler for Email and Password incorrect
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const user = users.find((user) => user.email === email);
@@ -42,6 +47,7 @@ const Login = () => {
 
 	return (
 		<div className='grid h-screen w-full grid-cols-2'>
+            {/* Component CardBackgroundCover */}
 			<CardBackgroundCover />
 			<div className='relative flex items-center justify-start bg-white'>
 				<div className='mx-[157.5px] flex w-full flex-col items-start justify-center gap-y-[25px]'>
@@ -52,22 +58,58 @@ const Login = () => {
 
 					{/* Form Login */}
 					<form className='w-full space-y-[25px]' onSubmit={handleSubmit}>
-						{/* <label className='mb-2 block text-sm'>User name</label> */}
-						{/* <label className='mb-2 block text-sm'>Password</label> */}
 						<div className='flex flex-col gap-y-[10px]'>
-							<input name='username' type='email' required className={`w-full rounded-md border px-4 py-3 text-sm outline-1 ${emailError ? 'outline-[#D9214E]' : 'outline-[#00549B]'} `} placeholder='Email' value={email} onChange={handleEmailChange} />
+							<div className={`relative flex h-12 items-center rounded-md  border text-sm ${emailError ? 'border-[#D9214E]' : 'border-[#00549B]'} `}>
+								<div className='relative mx-4 h-7 w-full'>
+									<input
+										autoComplete='off'
+										id='email'
+										name='email'
+										type='text'
+										className='peer mt-1 h-7 w-full bg-transparent text-[14px] font-semibold text-[#181C32] placeholder-transparent focus:mt-1 focus:outline-none'
+										placeholder='Email'
+										value={email}
+										onChange={handleEmailChange}
+									/>
+									<label
+										htmlFor='email'
+										className='absolute -top-1.5 left-0 text-[10px] font-medium text-[#A1A5B7] transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#A1A5B7] peer-focus:-top-1.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:text-[#A1A5B7]'
+									>
+										Email
+									</label>
+								</div>
+							</div>
 							{emailError && <p className='text-[13px] font-normal text-[#D9214E]'>{emailError}</p>}
 						</div>
 						{/* Password */}
 						<div className='flex flex-col gap-y-[10px]'>
-							<div className='relative flex items-center'>
-								<input name='password' type='password' required className={`w-full rounded-md border px-4 py-3 text-sm outline-1 ${passwordError ? 'outline-[#D9214E]' : 'outline-[#00549B]'}`} placeholder='Password' value={password} onChange={handlePasswordChange} />{' '}
-								{/* Hide */}
-                                <img src={images[2].path} alt={images[2].alt} srcSet={images[2].srcset} className='absolute right-4 h-6 w-6 cursor-pointer' />
-								{/* Show */}
-                                <img src={images[1].path} alt={images[1].alt} srcSet={images[1].srcset} className='absolute right-4 h-6 w-6 cursor-pointer' />
+							<div className={`relative flex h-12 items-center rounded-md border text-sm ${passwordError ? 'border-[#D9214E]' : 'border-[#00549B]'}`}>
+								<div className='relative mx-4 h-7 w-full'>
+									<input
+										autoComplete='off'
+										id='password'
+										name='password'
+										type={showPassword ? 'text' : 'password'}
+										className='peer mt-2 h-7 w-full bg-transparent text-[14px] font-semibold text-[#181C32] placeholder-transparent focus:mt-2 focus:outline-none'
+										placeholder='Password'
+										value={password}
+										onChange={handlePasswordChange}
+										disabled={emailError}
+									/>
+									<label
+										htmlFor='password'
+										className='absolute -top-1.5 left-0 text-[10px] font-medium text-[#A1A5B7] transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#A1A5B7] peer-focus:-top-1.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:text-[#A1A5B7]'
+									>
+										Password
+									</label>
+									{showPassword ? (
+										<img src={images[1].path} alt={images[1].alt} srcSet={images[1].srcset} className='absolute right-4 top-0.5 h-6 w-6 cursor-pointer' onClick={() => setShowPassword(false)} /> // modify this line
+									) : (
+										<img src={images[2].path} alt={images[2].alt} srcSet={images[2].srcset} className='absolute right-4 top-0.5 h-6 w-6 cursor-pointer' onClick={() => setShowPassword(true)} /> // modify this line
+									)}
+								</div>
 							</div>
-							{passwordError && <p className='text-[13px] font-normal text-[#D9214E]'>{passwordError}</p>} {/* add this line */}
+							{passwordError && <p className='text-[13px] font-normal text-[#D9214E]'>{passwordError}</p>}
 						</div>
 
 						<div className='inline-flex items-center gap-x-[10px]'>
@@ -85,6 +127,7 @@ const Login = () => {
 							</label>
 							<p className='text-sm font-medium text-[#5E6278]'>Remember me</p>
 						</div>
+
 						{/* Button Login */}
 						<button type='submit' className='h-12 w-full rounded-lg bg-[#0D5CC6] text-sm font-medium leading-5 text-white  hover:bg-[#00549B] focus:outline-none'>
 							Login
