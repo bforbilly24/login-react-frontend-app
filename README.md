@@ -13,6 +13,18 @@ git clone https://github.com/bforbilly24/login-react-frontend-app.git
 >
 2.Installation
 ```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+>
+3.Debug
+```bash
 npm run dev
 # or
 yarn dev
