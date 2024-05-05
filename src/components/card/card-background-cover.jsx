@@ -1,4 +1,4 @@
-import { images } from '../../utils/constant';
+import { images } from '@/utils/constant';
 
 const CardBackgroundCover = () => {
 	return (
