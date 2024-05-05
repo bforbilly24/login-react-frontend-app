@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { images, users } from '../utils/constant';
-import CardBackgroundCover from '../components/card/card-background-cover';
-import NotReadyResponsive from '../components/miscellaneous/not-ready-responsive';
+import { images, users } from '@/utils/constant';
+import CardBackgroundCover from '@/components/card/card-background-cover';
+import NotReadyResponsive from '@/components/miscellaneous/not-ready-responsive';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [submitError, setSubmitError] = useState('');
-	const [passwordError, setPasswordError] = useState(''); // add this line
+	const [passwordError, setPasswordError] = useState('');
 	// Direct to Success page
 	const navigate = useNavigate();
 	// Show and Hide Password
-	const [showPassword, setShowPassword] = useState(false); // add this line
+	const [showPassword, setShowPassword] = useState(false);
 
 	// Email Handler Required
 	const handleEmailChange = (e) => {
