@@ -1,19 +1,19 @@
 const images = [
-	{
-		path: '/public/brand.svg',
-		alt: 'Brand Image',
-		srcset: '/public/brand.svg 1x, /public/brand@2x.svg 2x',
-	},
     {
-		path: '/public/show.svg',
-		alt: 'Show',
-		srcset: '/public/show.svg 1x, /public/show@2x.svg 2x',
-	},
+        path: '/brand.svg',
+        alt: 'Brand Image',
+        srcset: '/brand.svg 1x, /brand@2x.svg 2x',
+    },
     {
-		path: '/public/hide.svg',
-		alt: 'Hide',
-		srcset: '/public/hide.svg 1x, /public/hide@2x.svg 2x',
-	},
+        path: '/show.svg',
+        alt: 'Show',
+        srcset: '/show.svg 1x, /show@2x.svg 2x',
+    },
+    {
+        path: '/hide.svg',
+        alt: 'Hide',
+        srcset: '/hide.svg 1x, /hide@2x.svg 2x',
+    },
 ];
 
 const users = [
