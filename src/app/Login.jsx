@@ -52,47 +52,47 @@ const Login = () => {
 				{/* Component CardBackgroundCover */}
 				<CardBackgroundCover />
 				<div className='relative flex items-center justify-start bg-white'>
-					<div className='mx-[157.5px] flex w-full flex-col items-start justify-center gap-y-[25px]'>
-						<div className='flex w-full flex-col gap-y-[11px]'>
-							<h3 className='align-middle text-[26px] font-semibold leading-[26px] tracking-[-2%]'>Login</h3>
-							<p className='align-middle text-sm font-semibold leading-[14px] text-[#A1A5B7]'>Please log in to start using HRIS</p>
+					<div className='mx-login-157.5 flex w-full flex-col items-start justify-center gap-y-login-25'>
+						<div className='flex w-full flex-col gap-y-login-11'>
+							<h3 className='align-middle text-login-26 font-semibold leading-login-26 tracking-login-2'>Login</h3>
+							<p className='align-middle text-sm font-semibold leading-login-14 text-grey-primary'>Please log in to start using HRIS</p>
 						</div>
 
 						{/* Form Login */}
-						<form className='w-full space-y-[25px]' onSubmit={handleSubmit}>
-							<div className='flex flex-col gap-y-[10px]'>
-								<div className={`relative flex h-12 items-center rounded-md  border text-sm ${emailError ? 'border-[#D9214E]' : 'border-[#00549B]'} `}>
+						<form className='w-full space-y-login-25' onSubmit={handleSubmit}>
+							<div className='flex flex-col gap-y-login-10'>
+								<div className={`relative flex h-12 items-center rounded-md border text-sm ${emailError ? 'border-red-primary' : 'border-blue-primary'} `}>
 									<div className='relative mx-4 h-7 w-full'>
 										<input
 											autoComplete='off'
 											id='email'
 											name='email'
 											type='text'
-											className='peer mt-1 h-7 w-full bg-transparent text-[14px] font-semibold text-[#181C32] placeholder-transparent focus:mt-1 focus:outline-none'
+											className='peer mt-1 h-7 w-full bg-transparent text-login-14 font-semibold text-black-primary placeholder-transparent focus:mt-1 focus:outline-none'
 											placeholder='Email'
 											value={email}
 											onChange={handleEmailChange}
 										/>
 										<label
 											htmlFor='email'
-											className='absolute -top-1.5 left-0 text-[10px] font-medium text-[#A1A5B7] transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#A1A5B7] peer-focus:-top-1.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:text-[#A1A5B7]'
+											className='absolute -top-1.5 left-0 text-login-10 font-medium text-grey-primary transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-primary peer-focus:-top-1.5 peer-focus:text-login-10 peer-focus:font-semibold peer-focus:text-grey-primary'
 										>
 											Email
 										</label>
 									</div>
 								</div>
-								{emailError && <p className='text-[13px] font-normal text-[#D9214E]'>{emailError}</p>}
+								{emailError && <p className='text-login-13 font-normal text-red-primary'>{emailError}</p>}
 							</div>
 							{/* Password */}
-							<div className='flex flex-col gap-y-[10px]'>
-								<div className={`relative flex h-12 items-center rounded-md border text-sm ${passwordError ? 'border-[#D9214E]' : 'border-[#00549B]'}`}>
+							<div className='flex flex-col gap-y-login-10'>
+								<div className={`relative flex h-12 items-center rounded-md border text-sm ${passwordError ? 'border-red-primary' : 'border-blue-primary'}`}>
 									<div className='relative mx-4 h-7 w-full'>
 										<input
 											autoComplete='off'
 											id='password'
 											name='password'
 											type={showPassword ? 'text' : 'password'}
-											className='peer mt-2 h-7 w-full bg-transparent text-[14px] font-semibold text-[#181C32] placeholder-transparent focus:mt-2 focus:outline-none'
+											className='peer mt-2 h-7 w-full bg-transparent text-login-14 font-semibold text-black-primary placeholder-transparent focus:mt-2 focus:outline-none'
 											placeholder='Password'
 											value={password}
 											onChange={handlePasswordChange}
@@ -100,7 +100,7 @@ const Login = () => {
 										/>
 										<label
 											htmlFor='password'
-											className='absolute -top-1.5 left-0 text-[10px] font-medium text-[#A1A5B7] transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#A1A5B7] peer-focus:-top-1.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:text-[#A1A5B7]'
+											className='absolute -top-1.5 left-0 text-login-10 font-medium text-grey-primary transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-primary peer-focus:-top-1.5 peer-focus:text-login-10 peer-focus:font-semibold peer-focus:text-grey-primary'
 										>
 											Password
 										</label>
@@ -111,14 +111,14 @@ const Login = () => {
 										)}
 									</div>
 								</div>
-								{passwordError && <p className='text-[13px] font-normal text-[#D9214E]'>{passwordError}</p>}
+								{passwordError && <p className='text-login-13 font-normal text-red-primary'>{passwordError}</p>}
 							</div>
 
-							<div className='inline-flex items-center gap-x-[10px]'>
+							<div className='inline-flex items-center gap-x-login-10'>
 								<label className='relative flex cursor-pointer items-center rounded-lg' htmlFor='customStyle'>
 									<input
 										type='checkbox'
-										className="before:content[''] peer relative h-8 w-8 cursor-pointer appearance-none rounded-lg border border-[#E1E3EA] bg-[#E1E3EA] transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-lg before:bg-blue-500 before:opacity-0 before:transition-opacity checked:border-[#E1E3EA] checked:bg-[#0D5CC6] checked:before:bg-[#0D5CC6] hover:scale-105 hover:before:opacity-0"
+										className="before:content[''] peer relative h-8 w-8 cursor-pointer appearance-none rounded-lg border border-grey-teritary bg-grey-teritary transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-lg before:bg-blue-500 before:opacity-0 before:transition-opacity checked:border-grey-teritary checked:bg-blue-secondary checked:before:bg-blue-secondary hover:scale-105 hover:before:opacity-0"
 										id='customStyle'
 									/>
 									<span className='pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100'>
@@ -127,16 +127,16 @@ const Login = () => {
 										</svg>
 									</span>
 								</label>
-								<p className='text-sm font-medium text-[#5E6278]'>Remember me</p>
+								<p className='text-sm font-medium text-grey-secondary'>Remember me</p>
 							</div>
 
 							{/* Button Login */}
-							<button type='submit' className='h-12 w-full rounded-lg bg-[#0D5CC6] text-sm font-medium leading-5 text-white  hover:bg-[#00549B] focus:outline-none'>
+							<button type='submit' className='h-12 w-full rounded-lg bg-blue-secondary text-sm font-medium leading-5 text-white  hover:bg-blue-primary focus:outline-none'>
 								Login
 							</button>
 						</form>
 						{/* Error Handling for Wrong Email or Password */}
-						{submitError && <p className='w-[324px] text-[13px] font-normal text-[#D9214E]'>{submitError}</p>}
+						{submitError && <p className='w-login-324 text-login-13 font-normal text-red-primary'>{submitError}</p>}
 					</div>
 				</div>
 			</div>
