@@ -2,7 +2,7 @@ import { images } from '@/utils/constant';
 
 const CardBackgroundCover = () => {
 	return (
-		<div className='bg-blue-primary relative flex items-center justify-start'>
+		<div className='relative flex items-center justify-start bg-blue-primary'>
 			<div className='absolute inset-0 login-bg-cover' />
 			<div className='mx-20 flex w-full flex-col gap-y-7'>
 				<img src={images[0].path} alt={images[0].alt} srcSet={images[0].srcset} className='h-login-134 w-login-113' />
