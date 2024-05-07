@@ -18,9 +18,9 @@ export default {
 				'blue-primary': '#00549B',
 				'blue-secondary': '#0D5CC6',
 				'red-primary': '#D9214E',
-				'grey-primary': '#A1A5B7',
-				'grey-secondary': '#5E6278',
-				'grey-teritary': '#E1E3EA',
+				'gray-primary': '#A1A5B7',
+				'gray-secondary': '#5E6278',
+				'gray-teritary': '#E1E3EA',
 			},
 			gap: {
 				'login-10': '10px',
@@ -50,8 +50,18 @@ export default {
 			margin: {
 				'login-157.5': '157.5px',
 			},
+			animation: {
+				slideInFromLeft: 'slideInFromLeft 2s',
+			},
+			keyframes: {
+				slideInFromLeft: {
+					'0%': { transform: 'translateX(30%)' },
+					'100%': { transform: 'translateX(0)' },
+				},
+			},
 		},
 	},
+	variants: {},
 	plugins: [
 		plugin(function ({ addUtilities }) {
 			addUtilities({
