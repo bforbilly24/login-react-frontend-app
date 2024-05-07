@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { images, users } from '@/utils/constant';
 import CardBackgroundCover from '@/components/card/card-background-cover';
 import NotReadyResponsive from '@/components/miscellaneous/not-ready-responsive';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -10,10 +11,12 @@ const Login = () => {
 	const [emailError, setEmailError] = useState('');
 	const [submitError, setSubmitError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	// Direct to Success page
-	const navigate = useNavigate();
 	// Show and Hide Password
 	const [showPassword, setShowPassword] = useState(false);
+	// Show Toast
+	const [showToast, setShowToast] = useState(false);
+	// Direct to Success page
+	const navigate = useNavigate();
 
 	// Email Handler Required
 	const handleEmailChange = (e) => {
@@ -34,15 +37,38 @@ const Login = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const user = users.find((user) => user.email === email);
+
+		// Get failed attempts from cookies
+		const failedAttempts = JSON.parse(Cookies.get('failedAttempts') || '{}');
+
+		// Check if password field is empty
+		if (!password) {
+			setPasswordError('Password must be filled first');
+			return;
+		}
+
 		if (!user) {
-			setSubmitError('Make sure your email is correct. 3 failed login attempts, your account will be disabled');
+			setSubmitError('Make sure your email is correct');
+		} else if (failedAttempts[user.email] && failedAttempts[user.email] >= 3) {
+			setSubmitError('Your account has been disabled due to 3 failed login attempts');
 		} else if (user.password !== password) {
+			// Increment failed attempts and save to cookies
+			failedAttempts[user.email] = (failedAttempts[user.email] || 0) + 1;
+			Cookies.set('failedAttempts', JSON.stringify(failedAttempts));
 			setPasswordError('Password incorrect');
 		} else {
+			// Reset failed attempts for this user and save to cookies
+			failedAttempts[user.email] = 0;
+			Cookies.set('failedAttempts', JSON.stringify(failedAttempts));
+			// Save login status in cookies
+			Cookies.set('isLoggedIn', 'true');
 			setEmailError('');
 			setPasswordError('');
 			setSubmitError('');
-			navigate('/success');
+			setShowToast(true);
+			setTimeout(() => {
+				navigate('/success', { replace: true });
+			}, 3000);
 		}
 	};
 
@@ -51,16 +77,17 @@ const Login = () => {
 			<div className='hidden h-screen w-full overflow-hidden xl:grid   xl:grid-cols-2'>
 				{/* Component CardBackgroundCover */}
 				<CardBackgroundCover />
+				{/* Content */}
 				<div className='relative flex items-center justify-start bg-white'>
-					<div className='mx-login-157.5 flex w-full flex-col items-start justify-center gap-y-login-25'>
-						<div className='flex w-full flex-col gap-y-login-11'>
-							<h3 className='align-middle text-login-26 font-semibold leading-login-26 tracking-login-2'>Login</h3>
-							<p className='align-middle text-sm font-semibold leading-login-14 text-grey-primary'>Please log in to start using HRIS</p>
+					<div className='mx-login-157.5 gap-y-login-25 flex w-full flex-col items-start justify-center'>
+						<div className='gap-y-login-11 flex w-full flex-col'>
+							<h3 className='text-login-26 leading-login-26 tracking-login-2 align-middle font-semibold'>Login</h3>
+							<p className='leading-login-14 text-gray-primary align-middle text-sm font-semibold'>Please log in to start using HRIS</p>
 						</div>
 
 						{/* Form Login */}
-						<form className='w-full space-y-login-25' onSubmit={handleSubmit}>
-							<div className='flex flex-col gap-y-login-10'>
+						<form className='space-y-login-25 w-full' onSubmit={handleSubmit}>
+							<div className='gap-y-login-10 flex flex-col'>
 								<div className={`relative flex h-12 items-center rounded-md border text-sm ${emailError ? 'border-red-primary' : 'border-blue-primary'} `}>
 									<div className='relative mx-4 h-7 w-full'>
 										<input
@@ -68,23 +95,23 @@ const Login = () => {
 											id='email'
 											name='email'
 											type='text'
-											className='peer mt-1 h-7 w-full bg-transparent text-login-14 font-semibold text-black-primary placeholder-transparent focus:mt-1 focus:outline-none'
+											className='text-login-14 text-black-primary peer mt-1 h-7 w-full bg-transparent font-semibold placeholder-transparent focus:mt-1 focus:outline-none'
 											placeholder='Email'
 											value={email}
 											onChange={handleEmailChange}
 										/>
 										<label
 											htmlFor='email'
-											className='absolute -top-1.5 left-0 text-login-10 font-medium text-grey-primary transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-primary peer-focus:-top-1.5 peer-focus:text-login-10 peer-focus:font-semibold peer-focus:text-grey-primary'
+											className='text-login-10 text-gray-primary peer-placeholder-shown:text-gray-primary peer-focus:text-login-10 peer-focus:text-gray-primary absolute -top-1.5 left-0 font-medium transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-focus:-top-1.5 peer-focus:font-semibold'
 										>
 											Email
 										</label>
 									</div>
 								</div>
-								{emailError && <p className='text-login-13 font-normal text-red-primary'>{emailError}</p>}
+								{emailError && <p className='text-login-13 text-red-primary font-normal'>{emailError}</p>}
 							</div>
 							{/* Password */}
-							<div className='flex flex-col gap-y-login-10'>
+							<div className='gap-y-login-10 flex flex-col'>
 								<div className={`relative flex h-12 items-center rounded-md border text-sm ${passwordError ? 'border-red-primary' : 'border-blue-primary'}`}>
 									<div className='relative mx-4 h-7 w-full'>
 										<input
@@ -92,7 +119,7 @@ const Login = () => {
 											id='password'
 											name='password'
 											type={showPassword ? 'text' : 'password'}
-											className='peer mt-2 h-7 w-full bg-transparent text-login-14 font-semibold text-black-primary placeholder-transparent focus:mt-2 focus:outline-none'
+											className='text-login-14 text-black-primary peer mt-2 h-7 w-full bg-transparent font-semibold placeholder-transparent focus:mt-2 focus:outline-none'
 											placeholder='Password'
 											value={password}
 											onChange={handlePasswordChange}
@@ -100,7 +127,7 @@ const Login = () => {
 										/>
 										<label
 											htmlFor='password'
-											className='absolute -top-1.5 left-0 text-login-10 font-medium text-grey-primary transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-primary peer-focus:-top-1.5 peer-focus:text-login-10 peer-focus:font-semibold peer-focus:text-grey-primary'
+											className='text-login-10 text-gray-primary peer-placeholder-shown:text-gray-primary peer-focus:text-login-10 peer-focus:text-gray-primary absolute -top-1.5 left-0 font-medium transition-all peer-placeholder-shown:top-0.5 peer-placeholder-shown:text-base peer-focus:-top-1.5 peer-focus:font-semibold'
 										>
 											Password
 										</label>
@@ -111,14 +138,14 @@ const Login = () => {
 										)}
 									</div>
 								</div>
-								{passwordError && <p className='text-login-13 font-normal text-red-primary'>{passwordError}</p>}
+								{passwordError && <p className='text-login-13 text-red-primary font-normal'>{passwordError}</p>}
 							</div>
 
-							<div className='inline-flex items-center gap-x-login-10'>
+							<div className='gap-x-login-10 inline-flex items-center'>
 								<label className='relative flex cursor-pointer items-center rounded-lg' htmlFor='customStyle'>
 									<input
 										type='checkbox'
-										className="before:content[''] peer relative h-8 w-8 cursor-pointer appearance-none rounded-lg border border-grey-teritary bg-grey-teritary transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-lg before:bg-blue-500 before:opacity-0 before:transition-opacity checked:border-grey-teritary checked:bg-blue-secondary checked:before:bg-blue-secondary hover:scale-105 hover:before:opacity-0"
+										className="before:content[''] border-gray-teritary bg-gray-teritary checked:border-gray-teritary checked:bg-blue-secondary checked:before:bg-blue-secondary peer relative h-8 w-8 cursor-pointer appearance-none rounded-lg border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-lg before:bg-blue-500 before:opacity-0 before:transition-opacity hover:scale-105 hover:before:opacity-0"
 										id='customStyle'
 									/>
 									<span className='pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100'>
@@ -127,19 +154,41 @@ const Login = () => {
 										</svg>
 									</span>
 								</label>
-								<p className='text-sm font-medium text-grey-secondary'>Remember me</p>
+								<p className='text-gray-secondary text-sm font-medium'>Remember me</p>
 							</div>
 
 							{/* Button Login */}
-							<button type='submit' className='h-12 w-full rounded-lg bg-blue-secondary text-sm font-medium leading-5 text-white  hover:bg-blue-primary focus:outline-none'>
+							<button type='submit' className='bg-blue-secondary hover:bg-blue-primary h-12 w-full rounded-lg text-sm font-medium leading-5  text-white focus:outline-none'>
 								Login
 							</button>
 						</form>
 						{/* Error Handling for Wrong Email or Password */}
-						{submitError && <p className='w-login-324 text-login-13 font-normal text-red-primary'>{submitError}</p>}
+						{submitError && <p className='w-login-324 text-login-13 text-red-primary font-normal'>{submitError}</p>}
 					</div>
+					{showToast && (
+						<div id='toast-success' className='animate-slideInFromLeft absolute bottom-0 right-0 mb-4 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow' role='alert'>
+							<div className='inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500'>
+								<svg className='h-5 w-5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20'>
+									<path d='M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z' />
+								</svg>
+							</div>
+							<div className='ms-3 text-sm font-normal'>Login successfully.</div>
+							<button
+								type='button'
+								className='-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300'
+								data-dismiss-target='#toast-success'
+								aria-label='Close'
+							>
+								<span className='sr-only'>Close</span>
+								<svg className='h-3 w-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
+									<path stroke='currentColor' d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6' />
+								</svg>
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
+			{/* Component NotReadyResponsive */}
 			<NotReadyResponsive />
 		</>
 	);
