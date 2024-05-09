@@ -1,17 +1,20 @@
 # React + Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+-   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## Getting Started
 
 >
+
 1. Pull in terminal
+
 ```
-git clone https://github.com/bforbilly24/login-react-frontend-app.git
+git clone https://github.com/bforbilly24/metrodata-academy-react-frontend-app.git
 ```
->
-2.Installation
+
+> 2.Installation
+
 ```bash
 npm install
 # or
@@ -22,8 +25,8 @@ pnpm install
 bun install
 ```
 
->
-3.Debug
+> 3.Debug
+
 ```bash
 npm run dev
 # or
@@ -42,4 +45,4 @@ This project uses [`inter-ui`](https://www.npmjs.com/package/inter-ui) to automa
 
 ## Preview
 
-<img width="1200" alt="login_page" src="https://github.com/bforbilly24/login-react-frontend-app/assets/93701344/6c8c4ea0-d24b-47dd-b179-efb5419f7dbe" >
+<img width="1200" alt="login_page" src="https://github.com/bforbilly24/metrodata-academy-react-frontend-app/assets/93701344/80d37ebf-2759-4796-8efd-08b351423bbc" >
