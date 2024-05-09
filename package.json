@@ -1,5 +1,5 @@
 {
-    "name": "login-react-frontend-app",
+    "name": "metrodata-academy-react-frontend-app",
     "private": true,
     "version": "1.0.0",
     "type": "module",
@@ -34,7 +34,7 @@
     "main": "vite.config.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bforbilly24/login-react-frontend-app"
+        "url": "git+https://github.com/bforbilly24/metrodata-academy-react-frontend-app.git"
     },
     "keywords": [
         "react"
@@ -42,7 +42,7 @@
     "author": "bforbill24",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/bforbilly24/login-react-frontend-app"
+        "url": "https://github.com/bforbilly24/metrodata-academy-react-frontend-app"
     },
-    "homepage": "https://github.com/bforbilly24/login-react-frontend-app#readme"
+    "homepage": "https://github.com/bforbilly24/metrodata-academy-react-frontend-app#readme"
 }
